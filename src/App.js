@@ -8,6 +8,10 @@ import LoginForm from "./pages/LoginForm";
 import ErrorPage from "./pages/ErrorPage";
 import Loader from "./pages/Loader";
 import ContactUs from "./pages/ContactUs";
+import AboutUs from "./pages/AboutUs";
+import ProductDetail from "./pages/ProductDetail";
+import AddProduct from "./pages/AddProduct";
+import Cart from "./pages/Cart";
 
 
 function App() {
@@ -26,14 +30,18 @@ function App() {
           <Route path="featuredproducts" element={<FeaturedProductsPage />} />
           <Route path="register" element={<Register />} />
           <Route path="login" element={<LoginForm />} />
-          <Route path="contactus" element={ <ContactUs />} />
+          <Route path="contact" element={<ContactUs />} />
+          <Route path="about" element={<AboutUs />} />
+          <Route path="product" element={<ProductDetail />} />
+          <Route path="addproduct" element={<AddProduct />} />
+          <Route path="cart" element={<Cart />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>
 
       {renderHeaderAndFooter && <Footer />}
       {/* <Loader /> */}
-     
+
 
     </>
   );

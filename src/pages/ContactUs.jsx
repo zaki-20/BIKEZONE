@@ -1,6 +1,37 @@
 import React from "react";
+import { useFormik } from 'formik';
+import * as yup from "yup";
+const schema = yup.object({
+    name: yup.string().required('name is required'),
+    email: yup.string().email('Invalid email').required('Email is required'),
+    subject: yup.string().required('email is required'),
+    message: yup.string().max(400, 'character imit exceed').required('mesage is required'),
+}).required();
+
 
 const ContactUs = () => {
+
+    const initialValues = {
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+    };
+
+    const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
+        useFormik({
+            initialValues,
+            validationSchema: schema,
+            validateOnChange: true,
+            validateOnBlur: false,
+            //// By disabling validation onChange and onBlur formik will validate on submit.
+            onSubmit: (values, action) => {
+                console.log("🚀 ~ file: App.jsx ~ line 17 ~ App ~ values", values);
+                //// to get rid of all the values after submitting the form
+                action.resetForm();
+            },
+        });
+
     return (
         <div class="relative z-10 overflow-hidden bg-[#def5f596] py-5 lg:py-[60px]">
             <span class="text-primary mb-4 text-xl block text-center  font-semibold">
@@ -93,34 +124,63 @@ const ContactUs = () => {
                     </div>
                     <div class="w-full px-4 lg:w-1/2 xl:w-5/12">
                         <div class="relative rounded-lg  bg-[#def5f5] p-8 shadow-xl sm:p-12">
-                            <form>
+                            <form onSubmit={handleSubmit}>
                                 <div class="mb-6 ">
                                     <input
+
+                                        name='name'
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
                                         type="text"
+                                        value={values.name}
                                         placeholder="Your Name"
                                         class="text-body-color border-[f0f0f0]  focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none"
                                     />
+                                    {errors.name && touched.name ? (
+                                        <p className="text-red-600 animate-pulse">{errors.name}</p>
+                                    ) : null}
                                 </div>
                                 <div class="mb-6">
                                     <input
+                                        name='email'
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.email}
                                         type="email"
                                         placeholder="Your Email"
                                         class="text-body-color border-[f0f0f0] focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none"
                                     />
+                                     {errors.email && touched.email ? (
+                                            <p className="text-red-600 animate-pulse">{errors.email}</p>
+                                        ) : null}
                                 </div>
                                 <div class="mb-6">
                                     <input
+                                        name='subject'
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.subject}
                                         type="text"
-                                        placeholder="Your Phone"
+                                        placeholder="Your subject"
                                         class="text-body-color border-[f0f0f0] focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none"
                                     />
+                                      {errors.subject && touched.subject ? (
+                                            <p className="text-red-600 animate-pulse">{errors.subject}</p>
+                                        ) : null}
                                 </div>
                                 <div class="mb-6">
                                     <textarea
+                                        name='message'
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.message}
                                         rows="6"
                                         placeholder="Your Message"
                                         class="text-body-color border-[f0f0f0] focus:border-primary w-full resize-none rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none"
                                     ></textarea>
+                                      {errors.message && touched.message ? (
+                                            <p className="text-red-600 animate-pulse">{errors.message}</p>
+                                        ) : null}
                                 </div>
                                 <div>
                                     <button
